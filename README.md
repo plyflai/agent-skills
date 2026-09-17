@@ -25,6 +25,7 @@ DeepSeek Harness 专属的技能不在这里，见 [plyflai/dsh-skills](https://
 | 技能 | 一句话 | 依赖 |
 | --- | --- | --- |
 | [`deeptalk`](skills/deeptalk/) | 把零散想法、bullet points、草稿即时深化为结构化需求，补出高信号的 unknown unknowns、拆分项与待决定事项 | 无（可选增强见下） |
+| [`_template`](skills/_template/) | 新增技能的骨架，复制改名即用（以下划线开头，不参与安装） | 无 |
 
 ## 快速开始
 
@@ -39,6 +40,16 @@ cd agent-skills
 
 `--target` 换成你自己的技能目录即可，例如 `~/.dsh/skills`、`~/.codex/skills`。
 加 `--link` 改成软链接安装，`git pull` 后立即生效。
+
+## 新增一个技能
+
+```bash
+cp -R skills/_template skills/my-new-skill
+# 改 skills/my-new-skill/SKILL.md 的 name（必须与目录名一致）与 description
+./scripts/validate.sh
+```
+
+`_template` 目录不会被当成真技能安装（名字以下划线开头），但会被校验，可以当作格式参考。
 
 ### 方式二：手动放
 
