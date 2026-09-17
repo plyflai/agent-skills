@@ -29,7 +29,18 @@ DeepSeek Harness 专属的技能不在这里，见 [plyflai/dsh-skills](https://
 
 ## 快速开始
 
-### 方式一：一行装好
+### 方式一：Claude Code 插件市场
+
+仓库根带 `.claude-plugin/marketplace.json`，可直接作为插件市场添加：
+
+```bash
+/plugin marketplace add plyflai/agent-skills
+/plugin install agent-skills@plyflai-agent-skills
+```
+
+清单里的 marketplace 名是 `plyflai-agent-skills` —— `agent-skills` 本身在 Claude Code 的保留名列表里，第三方用了会导致整个 marketplace 拒绝加载，所以这里换了名。本仓库是 skills-only，条目用 `"source": "./"` + `"strict": false` 直接指向 `skills/`，不需要每个技能各自的 `plugin.json`。
+
+### 方式二：一行装好
 
 ```bash
 git clone https://github.com/plyflai/agent-skills
@@ -41,17 +52,7 @@ cd agent-skills
 `--target` 换成你自己的技能目录即可，例如 `~/.dsh/skills`、`~/.codex/skills`。
 加 `--link` 改成软链接安装，`git pull` 后立即生效。
 
-## 新增一个技能
-
-```bash
-cp -R skills/_template skills/my-new-skill
-# 改 skills/my-new-skill/SKILL.md 的 name（必须与目录名一致）与 description
-./scripts/validate.sh
-```
-
-`_template` 目录不会被当成真技能安装（名字以下划线开头），但会被校验，可以当作格式参考。
-
-### 方式二：手动放
+### 方式三：手动放
 
 把 `skills/deeptalk/` 整个目录拷进你的技能目录，保持内部结构不变：
 
@@ -62,9 +63,21 @@ cp -R skills/_template skills/my-new-skill
 └── agents/openai.yaml          # 可选，给 Codex/OpenAI 侧用的界面元数据
 ```
 
-### 方式三：只用提示词
+### 方式四：只用提示词
 
 不想装技能，把 `skills/deeptalk/SKILL.md` 的内容直接贴进系统提示词里也能用，只是 `references/` 不会被自动加载 —— 那样会丢掉相当一部分细节。
+
+## 新增一个技能
+
+```bash
+cp -R skills/_template skills/my-new-skill
+# 改 skills/my-new-skill/SKILL.md 的 name（必须与目录名一致）与 description
+./scripts/validate.sh
+```
+
+`_template` 目录不会被当成真技能安装（名字以下划线开头），但会被校验，可以当作格式参考。
+
+新增后记得把它加进 `.claude-plugin/marketplace.json` 的 `skills` 数组 —— `./scripts/validate-marketplace.sh` 会检查两边是否一致，漏了会报错。
 
 ## 技能怎么用
 
@@ -98,14 +111,17 @@ cp -R skills/_template skills/my-new-skill
 
 ```text
 agent-skills/
+├── .claude-plugin/
+│   └── marketplace.json   # Claude Code 插件市场清单（skills-only，指向 skills/）
 ├── skills/
 │   └── deeptalk/          # 每个技能一个目录，目录名 = SKILL.md 里的 name
 │       ├── SKILL.md
 │       ├── references/
 │       └── agents/
 ├── scripts/
-│   ├── install.sh         # 安装技能到任意技能目录
-│   └── validate.sh        # 技能结构校验（CI 也在跑）
+│   ├── install.sh             # 安装技能到任意技能目录
+│   ├── validate.sh            # 技能结构校验（CI 也在跑）
+│   └── validate-marketplace.sh # 插件清单校验（CI 也在跑）
 ├── .github/workflows/validate.yml
 ├── LICENSE
 └── README.md
@@ -117,9 +133,12 @@ agent-skills/
 
 ```bash
 ./scripts/validate.sh
+./scripts/validate-marketplace.sh
 ```
 
-它检查：`SKILL.md` 存在且 frontmatter 合法、`name` 与目录名一致且符合命名规范、`description` 非空、`SKILL.md` 里引用的相对路径文件真实存在、技能目录内没有 `.DS_Store` 或本地 git 嵌套。
+`validate.sh` 检查：`SKILL.md` 存在且 frontmatter 合法、`name` 与目录名一致且符合命名规范、`description` 非空且不超 1024 字符、`SKILL.md` 里引用的相对路径文件真实存在、技能目录内没有 `.DS_Store` 或本地 git 嵌套。
+
+`validate-marketplace.sh` 检查：清单 JSON 合法、marketplace 名不是 Claude Code 保留名、每个技能条目都真实存在且含 `SKILL.md`、`skills/` 下的真技能没有漏声明。
 
 ## 贡献
 
