@@ -67,7 +67,31 @@ cd agent-skills
 
 不同 harness 读技能的位置不一样，`--target` 换成对应的那个即可：
 
-<!-- HARNESS_TABLE -->
+| Harness | 用户级 | 项目级 | 调用 |
+| --- | --- | --- | --- |
+| **跨工具通用** | `~/.agents/skills/` | `.agents/skills/` | 取决于各 harness |
+| **Codex CLI** | `~/.agents/skills/`<br>`~/.codex/skills/` | `.agents/skills/` | `/skills` 或 `$deeptalk` |
+| **Gemini CLI** | `~/.agents/skills/`<br>`~/.gemini/skills/` | `.agents/skills/`<br>`.gemini/skills/` | 说完需求后模型自行激活 |
+| **Qwen Code** | `~/.qwen/skills/` | `.qwen/skills/` | `/deeptalk` |
+| **Claude Code** | `~/.claude/skills/` | `.claude/skills/` | 说完需求后模型自行调用 |
+| **DSH** | `~/.agents/skills/`<br>`~/.dsh/skills/` | `.agents/skills/`<br>`.dsh/skills/` | 说完需求后模型自行加载 |
+
+deeptalk **不依赖任何 harness 特有功能**，上面每一个都能跑。最省事的装法是共用路径：
+
+```bash
+./scripts/install.sh deeptalk --target ~/.agents/skills
+```
+
+各 harness 自带的安装器也行：
+
+```bash
+# Codex
+codex plugin marketplace add plyflai/agent-skills && codex plugin add deeptalk@plyflai-skills
+# Gemini CLI
+gemini skills install https://github.com/plyflai/agent-skills.git --path skills/deeptalk
+# Claude Code
+/plugin marketplace add plyflai/agent-skills && /plugin install deeptalk@plyflai-skills
+```
 
 装完不用重启，多数 harness 下次对话就会加载。
 
@@ -96,4 +120,4 @@ cd agent-skills
 
 ## License
 
-[MIT](../LICENSE) © 2026 plyflai
+[MIT](https://github.com/plyflai/agent-skills/blob/main/LICENSE) © 2026 plyflai
