@@ -11,11 +11,8 @@
 | 技能 | 一句话 | 依赖 |
 | --- | --- | --- |
 | [`deeptalk`](skills/deeptalk/) | 把零散想法、bullet points、草稿即时深化为结构化需求，补出高信号的盲区候选、拆分项与待决定事项 | 无 |
-| [`_template`](skills/_template/) | 新增技能的骨架，复制改名即用（以下划线开头，不参与安装） | 无 |
 
-DSH 专属技能不在这个仓库，见 [plyflai/dsh-skills](https://github.com/plyflai/dsh-skills)。
-
-## deeptalk
+### deeptalk
 
 > **把零散想法问透。** 丢给它一段 bullet points、草稿或半句话，它先给一轮即时补全，再把真实取舍摆到你面前——不替你拍板。
 
@@ -33,6 +30,8 @@ DSH 专属技能不在这个仓库，见 [plyflai/dsh-skills](https://github.com
 git clone https://github.com/plyflai/agent-skills && cd agent-skills
 ./scripts/install.sh deeptalk --target <你的技能目录>
 ```
+
+DSH 专属技能不在这个仓库，见 [plyflai/dsh-skills](https://github.com/plyflai/dsh-skills)。
 
 ## 安装
 
@@ -102,11 +101,25 @@ Agent Skills 是**按需加载**的：harness 启动时只注入每个技能的 
 
 ## 新增一个技能
 
-```bash
-cp -R skills/_template skills/my-new-skill
-# 改 skills/my-new-skill/SKILL.md 的 name（必须与目录名一致）与 description
-./scripts/validate.sh
+在 `skills/` 下建一个目录，目录名就是技能名，里面放一个 `SKILL.md`：
+
+```text
+skills/my-new-skill/
+└── SKILL.md
 ```
+
+`SKILL.md` 开头是 frontmatter，`name` 必须与目录名一致，`description` 写「什么时候用我」：
+
+```markdown
+---
+name: my-new-skill
+description: 一句话说明它在什么情况下该被加载。
+---
+
+正文：技能被加载后要怎么做。
+```
+
+细节多就拆进 `references/`，需要确定性计算就放 `scripts/`——`SKILL.md` 只留入口，其余按需读取。写完跑 `./scripts/validate.sh`。
 
 新增后把它作为**独立条目**加进 `.claude-plugin/marketplace.json`——一个条目一个技能，条目名等于技能目录名。`./scripts/validate-marketplace.sh` 会检查这两点，合并成伞形条目会被直接报错。
 
