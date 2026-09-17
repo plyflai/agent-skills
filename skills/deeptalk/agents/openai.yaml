@@ -1,0 +1,7 @@
+interface:
+  display_name: "DeepTalk"
+  short_description: "即时补全需求，并按依赖顺序厘清关键取舍"
+  default_prompt: "Use $deeptalk to deepen this idea immediately: mirror the user's language, format, granularity, and tone while separating goal from proposal, adding high-signal missing points, splitting nested requirements, and surfacing decisions without silently approving them. When key decisions depend on unresolved earlier decisions, ask only up to three current decisions per round, then recompute after the user's answer instead of asking downstream questions early."
+
+policy:
+  allow_implicit_invocation: false
