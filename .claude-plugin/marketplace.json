@@ -1,25 +1,25 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-marketplace.json",
-  "name": "plyflai-agent-skills",
+  "name": "plyflai-skills",
   "owner": {
     "name": "plyflai",
     "url": "https://github.com/plyflai"
   },
   "metadata": {
-    "description": "通用型 Agent Skills：与 harness、厂商解耦，可被任何支持 SKILL.md 约定的 agent 使用",
+    "description": "plyflai 的通用型 Agent Skills：与 harness、厂商解耦，可被任何支持 SKILL.md 约定的 agent 使用",
     "version": "1.0.0"
   },
   "plugins": [
     {
-      "name": "agent-skills",
-      "displayName": "Generic Agent Skills",
-      "description": "领域无关的 agent skills。首批包含 deeptalk：把零散想法即时深化为结构化需求，补出高信号的盲区候选、拆分项与待决定事项。",
+      "name": "deeptalk",
+      "displayName": "DeepTalk",
+      "description": "把零散想法、bullet points、草稿即时深化为结构化需求：补出高信号的盲区候选、拆分项与待决定事项，把决定权交还给人。",
       "source": "./",
       "strict": false,
       "license": "MIT",
       "category": "productivity",
       "keywords": [
-        "agent-skills",
+        "deeptalk",
         "requirements",
         "prompt-engineering"
       ],
