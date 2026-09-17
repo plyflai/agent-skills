@@ -1,16 +1,19 @@
-<div align="center">
-
-# agent-skills
-
-**一个技能一个目录，各自是独立的东西** · 与 harness、厂商解耦，任何支持 `SKILL.md` 约定的 agent 都能用
+这里收集与 harness、厂商解耦的通用 agent 技能——目录名叫 `agent-skills` 只是仓库的位置，它不是技能。
 
 [![skills](https://img.shields.io/badge/skills-1-blue)](#技能)
 [![license](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![validate](https://github.com/plyflai/agent-skills/actions/workflows/validate.yml/badge.svg)](https://github.com/plyflai/agent-skills/actions/workflows/validate.yml)
 
-</div>
+## 技能
 
----
+每个技能自成一个目录、一个入口 `SKILL.md`，**互不隶属**。目录名 = `SKILL.md` 里的 `name`，装到本地也是这个目录名，没有中间层。
+
+| 技能 | 一句话 | 依赖 |
+| --- | --- | --- |
+| [`deeptalk`](skills/deeptalk/) | 把零散想法、bullet points、草稿即时深化为结构化需求，补出高信号的盲区候选、拆分项与待决定事项 | 无 |
+| [`_template`](skills/_template/) | 新增技能的骨架，复制改名即用（以下划线开头，不参与安装） | 无 |
+
+DSH 专属技能不在这个仓库，见 [plyflai/dsh-skills](https://github.com/plyflai/dsh-skills)。
 
 ## deeptalk
 
@@ -30,17 +33,6 @@
 git clone https://github.com/plyflai/agent-skills && cd agent-skills
 ./scripts/install.sh deeptalk --target <你的技能目录>
 ```
-
-## 技能
-
-每个技能自成一个目录、一个入口 `SKILL.md`，**互不隶属**。目录名 = `SKILL.md` 里的 `name`，装到本地也是这个目录名，没有中间层。
-
-| 技能 | 一句话 | 依赖 |
-| --- | --- | --- |
-| [`deeptalk`](skills/deeptalk/) | 把零散想法、bullet points、草稿即时深化为结构化需求，补出高信号的盲区候选、拆分项与待决定事项 | 无 |
-| [`_template`](skills/_template/) | 新增技能的骨架，复制改名即用（以下划线开头，不参与安装） | 无 |
-
-DSH 专属技能不在这里，见 [plyflai/dsh-skills](https://github.com/plyflai/dsh-skills)。
 
 ## 安装
 
