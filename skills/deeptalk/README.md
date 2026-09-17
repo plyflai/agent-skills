@@ -63,18 +63,22 @@ cd agent-skills
 
 不装技能也行，把 `skills/deeptalk/SKILL.md` 的内容直接贴进系统提示词。只是 `references/` 不会被自动加载，会丢掉相当一部分细节。
 
-## 各 harness 的目录
+## 装到哪
 
-不同 harness 读技能的位置不一样，`--target` 换成对应的那个即可：
+技能是按目录认的，惯例放这两处：
 
-| Harness | 用户级 | 项目级 | 调用 |
-| --- | --- | --- | --- |
-| **跨工具通用** | `~/.agents/skills/` | `.agents/skills/` | 取决于各 harness |
-| **Codex CLI** | `~/.agents/skills/`<br>`~/.codex/skills/` | `.agents/skills/` | `/skills` 或 `$deeptalk` |
-| **Gemini CLI** | `~/.agents/skills/`<br>`~/.gemini/skills/` | `.agents/skills/`<br>`.gemini/skills/` | 说完需求后模型自行激活 |
-| **Qwen Code** | `~/.qwen/skills/` | `.qwen/skills/` | `/deeptalk` |
-| **Claude Code** | `~/.claude/skills/` | `.claude/skills/` | 说完需求后模型自行调用 |
-| **DSH** | `~/.agents/skills/`<br>`~/.dsh/skills/` | `.agents/skills/`<br>`.dsh/skills/` | 说完需求后模型自行加载 |
+| | 目录 |
+| --- | --- |
+| 用户级 | `~/.agents/skills/deeptalk/`（你的机器，所有项目都能用） |
+| 项目级 | `<仓库>/.agents/skills/deeptalk/`（跟着仓库走，写进 git 团队共用） |
+
+`~/.agents/skills/` 是约定俗成的跨工具共用路径。也有 harness 只认自己的目录，那就再放一份：
+
+| 举例 | 它的目录 |
+| --- | --- |
+| Codex | 读 `~/.agents/skills/` |
+| Claude Code | `~/.claude/skills/`（项目内 `.claude/skills/`） |
+| DSH | 读 `~/.agents/skills/`，也认 `~/.dsh/skills/` |
 
 deeptalk **不依赖任何 harness 特有功能**，上面每一个都能跑。最省事的装法是共用路径：
 
@@ -82,13 +86,11 @@ deeptalk **不依赖任何 harness 特有功能**，上面每一个都能跑。�
 ./scripts/install.sh deeptalk --target ~/.agents/skills
 ```
 
-各 harness 自带的安装器也行：
+各家自带的安装器也行：
 
 ```bash
 # Codex
 codex plugin marketplace add plyflai/agent-skills && codex plugin add deeptalk@plyflai-skills
-# Gemini CLI
-gemini skills install https://github.com/plyflai/agent-skills.git --path skills/deeptalk
 # Claude Code
 /plugin marketplace add plyflai/agent-skills && /plugin install deeptalk@plyflai-skills
 ```
