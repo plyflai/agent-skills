@@ -10,26 +10,7 @@
 
 | 技能 | 一句话 | 依赖 |
 | --- | --- | --- |
-| [`deeptalk`](skills/deeptalk/) | 把零散想法、bullet points、草稿即时深化为结构化需求，补出高信号的盲区候选、拆分项与待决定事项 | 无 |
-
-### deeptalk
-
-> **把零散想法问透。** 丢给它一段 bullet points、草稿或半句话，它先给一轮即时补全，再把真实取舍摆到你面前——不替你拍板。
-
-[**→ 完整说明（安装 / 协议 / 边界）**](skills/deeptalk/)
-
-这些说法会命中它：
-
-- 「我有个想法，帮我理一理」
-- 丢一段 bullet points 或草稿，说「这样够了吗 / 还缺什么」
-- 「帮我把这个需求问透」
-
-它和普通「帮我写需求文档」的区别在**证据标注**：每个新增点都带标签（`补全` / `拆分` / `盲区候选` / `待决定` / `假设`），所以你能分清哪些是你真说过的、哪些是它替你假设的。`盲区候选` 和 `补全` 都只是候选，不等于你已批准。
-
-```bash
-git clone https://github.com/plyflai/agent-skills && cd agent-skills
-./scripts/install.sh deeptalk --target <你的技能目录>
-```
+| [`deeptalk`](skills/deeptalk/) | **把零散想法问透**：丢给它一段 bullet points、草稿或半句话，它先给一轮即时补全，再把真实取舍摆到你面前——不替你拍板。<br>`补全` / `拆分` / `盲区候选` / `待决定` / `假设` 每个新增点都带证据标签，你能分清哪些是你真说过的、哪些是它替你假设的；候选不等于你已批准。<br>[→ 完整说明（安装 / 协议 / 边界）](skills/deeptalk/) | 无 |
 
 DSH 专属技能不在这个仓库，见 [plyflai/dsh-skills](https://github.com/plyflai/dsh-skills)。
 
